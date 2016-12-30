@@ -1,0 +1,35 @@
+{{#if message}}
+    <div class="message {{type}}">
+        <p>{{message}}</p>
+    </div>
+{{/if}}
+
+{{#if rows}}
+    <table>
+        <thead>
+        <tr>
+            <td>USERNAME</td>
+            <td>EMAIL</td>
+        </tr>
+        </thead>
+        <tbody>
+            {{#each rows}}
+            <tr>
+                <td>
+                    {{this.username}}
+                </td>
+                <td>
+                    {{this.email}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{/if}}
+
+<form action="/users" method="post">
+    <input type="text" name="username" required/>
+    <input type="password" name="password" required/>
+    <input type="text" name="email">
+    <input type="submit" value="Submit" />
+</form>
