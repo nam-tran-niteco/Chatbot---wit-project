@@ -1,9 +1,12 @@
 <div class="chatbox">
     <div class="chat-content">
-
+        <p>{{ this.res }}</p>
     </div>
 
     <div class="chat-input">
-
+        <form action="/chat" method="post">
+            <input type="text" name="chat" required/>
+            <input type="submit" value="Submit" />
+        </form>
     </div>
 </div>
