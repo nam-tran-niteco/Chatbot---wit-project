@@ -1,4 +1,5 @@
 var express = require('express');
+var hbs = require( 'express-handlebars' );
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -12,6 +13,12 @@ var chatRoute = require('./routes/chatRoute');
 var app = express();
 
 // view engine setup
+app.engine('hbs', hbs({
+    extname: 'hbs',
+    defaultLayout: 'layout',
+    layoutsDir: __dirname + '/views/',
+    partialsDir: __dirname + '/views/partials/'
+}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
