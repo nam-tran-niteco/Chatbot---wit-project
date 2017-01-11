@@ -1,12 +1,14 @@
+
+<h1 class="chatbot-title">Chat bot test API</h1>
+
 <div class="chatbox">
     <div class="chat-content">
-        <p>{{ this.res }}</p>
+        <p class="bot-chat">Hello user</p>
+        <p class="user-chat">Hi bot</p>
     </div>
 
     <div class="chat-input">
-        <form action="/chat" method="post">
-            <input type="text" name="chat" required/>
-            <input type="submit" value="Submit" />
-        </form>
+        <input type="text" name="chat" required id="chat"/>
+        <input type="submit" value="Submit" id="submit" />
     </div>
 </div>

@@ -29,11 +29,51 @@ table {
 }
 
 // CHAT BOX
+.chatbot-title {
+    text-align: center;
+}
 .chatbox {
+    margin: 0 auto;
     height: 600px;
+    width: 50%;
 
     .chat-content {
         height: 80%;
-        overflow-y: scroll;
+
+        p {
+            border-radius: 5px;
+            clear: both;
+            padding: 20px;
+            max-width: 60%;
+        }
+
+        .bot-chat {
+            background: #d9d9d9;
+            color: #000;
+            float: left;
+        }
+
+        .user-chat {
+            background: #4080ff;
+            color: rgb(255, 255, 255);
+            float: right;
+        }
+
+    }
+
+    .chat-input {
+        margin: 20px 0;
+
+        #chat {
+            border: 1px solid blue;
+            padding: 15px;
+            width: 80%;
+        }
+
+        #submit {
+            background: rgb(150, 255, 255);
+            border: none;
+            padding: 15px;
+        }
     }
 }

@@ -12,17 +12,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res) {
+    console.log(req.body);
     if ( req.body.chat ) {
 
-        var chat = req.body.chat.trim();
-        
-        chatController.wit.runActions(chatController.sessionId, chat, {}, 5).then(function (ctx) {
-            console.log(ctx);
+        chatController.wit.runActions(chatController.sessionId, req.body.chat, {}, 5).then(function (ctx) {
+            // res.send({ some: JSON.stringify({response:'json'}) });
+            res.send( {context: ctx} );
         }).catch(function (err) {
             return console.error(err);
         });
-
-        res.render( viewpath );
+    
     }
 });
 
