@@ -39,10 +39,12 @@ table {
 
     .chat-content {
         height: 80%;
+        overflow: auto;
 
         p {
             border-radius: 5px;
             clear: both;
+            margin: 1px 0;
             padding: 20px;
             max-width: 60%;
         }
