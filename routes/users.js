@@ -7,7 +7,7 @@ var viewpath = 'manage/user'
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     userModel.getUsers(function (err, rows, fields) {
-        res.render(viewpath, {title: "User List", rows: rows})
+        res.render(viewpath, {title: "User List - ", rows: rows})
     })
 });
 
@@ -27,15 +27,15 @@ router.post('/', function (req, res) {
         if ( req.body.email ) insertParams.email = req.body.email
 
         userModel.insertUser(insertParams, function (err, rows, fields) {
-            if (err) res.render(viewpath, {title: "User List", message: err, type: "error"})
+            if (err) res.render(viewpath, {title: " - User List", message: err, type: "error"})
 
             else userModel.getUsers(function (err, rows, fields) {
-                if (err) res.render(viewpath, {title: "User List", message: err, type: "error"})
-                else res.render(viewpath, {title: "User List", rows: rows, message: "Insert Success", type: "success"})
+                if (err) res.render(viewpath, {title: " - User List", message: err, type: "error"})
+                else res.render(viewpath, {title: " - User List", rows: rows, message: "Insert Success", type: "success"})
             })
         })
     }
-    else res.render(viewpath, {title: "User List", message: "Error", type: "error"})
+    else res.render(viewpath, {title: " - User List", message: "Error", type: "error"})
 })
 
 module.exports = router;
