@@ -21,9 +21,6 @@ $(document).ready( function () {
                     chat: chat
                 }),
                 contentType: "application/json; charset=utf-8",
-                complete: function (xhr, status) {
-                    console.log(status);
-                },
                 success: function (data) {
                     console.log(data);
                     $('.waiting').text('Xin chao');

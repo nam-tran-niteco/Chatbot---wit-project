@@ -12,7 +12,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res) {
-    console.log(req.body);
     if ( req.body.chat ) {
 
         chatController.wit.runActions(chatController.sessionId, req.body.chat, {}, 5).then(function (ctx) {

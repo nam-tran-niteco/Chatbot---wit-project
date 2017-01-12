@@ -19,30 +19,30 @@ class ChatController {
 
     properties() {
 
-        this.accessToken = "TBING3ZAMWTJA2QOETNURHTCN7G77UFQ";
+        this.accessToken = "PGV3JRAW26TKFWSGMCRJIQDXQWDB34SA";
 
         this.actions = {
             send(request, response) {
                 // const {sessionId, context, entities} = request;
                 // const {text, quickreplies} = response;
                 console.log('sending...', JSON.stringify(response));
-            },
-            getForecast({context, entities}) {
-                const val = entities && entities['location'] &&
-                        Array.isArray(entities['location']) &&
-                        entities['location'].length > 0 &&
-                        entities['location'][0].value
-                    ;
-                var location = typeof val === 'object' ? val.value : val;
-                if (location) {
-                    context.forecast = 'sunny in ' + location; // we should call a weather API here
-                    delete context.missingLocation;
-                } else {
-                    context.missingLocation = true;
-                    delete context.forecast;
-                }
-                return context;
-            },
+            }
+            // getForecast({context, entities}) {
+            //     const val = entities && entities['location'] &&
+            //             Array.isArray(entities['location']) &&
+            //             entities['location'].length > 0 &&
+            //             entities['location'][0].value
+            //         ;
+            //     var location = typeof val === 'object' ? val.value : val;
+            //     if (location) {
+            //         context.forecast = 'sunny in ' + location; // we should call a weather API here
+            //         delete context.missingLocation;
+            //     } else {
+            //         context.missingLocation = true;
+            //         delete context.forecast;
+            //     }
+            //     return context;
+            // },
         };
     }
 
