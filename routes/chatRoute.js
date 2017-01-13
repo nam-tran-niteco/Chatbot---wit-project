@@ -14,22 +14,27 @@ router.get('/', function(req, res, next) {
 router.post('/', function (req, res) {
     if ( req.body.chat ) {
 
-        // chatController.wit.runActions(chatController.sessionId, req.body.chat, {}, 5).then(function (ctx) {
-        //     res.send( {context: ctx} );
-        // }).catch(function (err) {
-        //     return console.error(err);
-        // });
+        res.send( {data: 'test'} );
+        
+        chatController.wit.runActions(chatController.sessionId, req.body.chat, {}, 5)
+            .then((ctx) => {
+                console.log('Run actions: ' + JSON.stringify(ctx));
+            })
+            .catch((err) => {
+                return console.error(err);
+            });
     
-        // chatController.wit.message(req.body.chat, {}).then((data) => {
-        //     res.send({data: data})
-        // }).catch(() => {
-        //     res.send({status: 'error'});
-        // })
+        chatController.wit.message(req.body.chat, {})
+            .then((data) => {
+                console.log('Message: ' + JSON.stringify(data));
+            })
+            .catch(() => {
+                console.error;
+            });
 
         chatController.wit.converse(chatController.sessionId, req.body.chat, {})
             .then((data) => {
-                console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
-                res.send({data: data})
+                console.log('Converse: ' + JSON.stringify(data));
             })
             .catch(console.error);
         

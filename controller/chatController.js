@@ -5,46 +5,48 @@ let instance = null;
 
 class ChatController {
 
+    firstEntityValue(entities, entity) {
+        const val = entities && entities[entity] &&
+                Array.isArray(entities[entity]) &&
+                entities[entity].length > 0 &&
+                entities[entity][0].value
+            ;
+        if (!val) {
+            return null;
+        }
+        return typeof val === 'object' ? val.value : val;
+    }
+
+
     properties() {
+
+        // create an instance of Class ChatController
+        let _this = this;
 
         // wit.ai app's access token
         this.accessToken = "PGV3JRAW26TKFWSGMCRJIQDXQWDB34SA";
         
         this.sessionId = uuid.v1();
-        
+
         this.actions = {
             send(request, response) {
-                return Promise.resolve(response);
+                return new Promise(function(resolve, reject) {
+                    console.log(JSON.stringify(response));
+                    return resolve();
+                });
             },
-            myAction({sessionId, context, text, entities}) {
-                console.log(`Session ${sessionId} received ${text}`);
-                console.log(`The current context is ${JSON.stringify(context)}`);
-                console.log(`Wit extracted ${JSON.stringify(entities)}`);
-                return Promise.resolve(context);
+            getContact({context, entities}) {
+                var contact = _this.firstEntityValue(entities, 'contactinfo');
+                context.contact = 'người bạn tên là ' + contact;
+                return context;
             }
-            // getForecast({context, entities}) {
-            //     const val = entities && entities['location'] &&
-            //             Array.isArray(entities['location']) &&
-            //             entities['location'].length > 0 &&
-            //             entities['location'][0].value
-            //         ;
-            //     var location = typeof val === 'object' ? val.value : val;
-            //     if (location) {
-            //         context.forecast = 'sunny in ' + location; // we should call a weather API here
-            //         delete context.missingLocation;
-            //     } else {
-            //         context.missingLocation = true;
-            //         delete context.forecast;
-            //     }
-            //     return context;
-            // },
         };
     }
 
     constructor () {
         // load properties
         this.properties();
-        
+
         var Wit = require('node-wit').Wit;
         
         var config = {

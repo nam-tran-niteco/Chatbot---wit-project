@@ -11,7 +11,7 @@ $(document).ready( function () {
             // check user's input being empty or not
             if( chat ) {
 
-                // append user's input to chabox
+                // append user's input to chatbox
                 $('.chat-content').append('<p class="user-chat">' + chat + '</p>');
                 $('#chat').val('');
 
@@ -26,11 +26,8 @@ $(document).ready( function () {
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
 
-                        var msg = data.data.msg;
-
-                        console.log(msg);
-
-                        $('.waiting').text(msg);
+                        // got the response, replace text and focus the input box
+                        $('.waiting').text('test');
                         $('.waiting').removeClass('waiting');
 
                         $('#chat').prop('disabled', false);
@@ -42,9 +39,11 @@ $(document).ready( function () {
                     }
                 });
 
+                // Bot is typing (wait response from the server)
                 $('.chat-content').append('<p class="bot-chat waiting">' + 'bot is typing...' + '</p>');
                 $('#chat').prop('disabled', true);
                 $('.chat-content').scrollTop($('.chat-content').height());
+
             }
         }
     } );
