@@ -3,17 +3,23 @@
  */
 $(document).ready( function () {
 
-    $('#chat').on( 'keypress', function (event) {
+    var chatBox = $('#chat');
+    var chatContent = $('.chat-content');
+
+    // focus on input box
+    chatBox.focus();
+
+    chatBox.on( 'keypress', function (event) {
         if( event.keyCode == 13 ) {
 
-            var chat = $('#chat').val();
+            var chat = chatBox.val();
 
             // check user's input being empty or not
             if( chat ) {
 
                 // append user's input to chatbox
-                $('.chat-content').append('<p class="user-chat">' + chat + '</p>');
-                $('#chat').val('');
+                chatContent.append('<p class="user-chat">' + chat + '</p>');
+                chatBox.val('');
 
                 // call an ajax to node server and take response from wit
                 $.ajax({
@@ -25,14 +31,14 @@ $(document).ready( function () {
                     }),
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-
+                        
                         // got the response, replace text and focus the input box
-                        $('.waiting').text('test');
+                        $('.waiting').text(data.text);
                         $('.waiting').removeClass('waiting');
 
-                        $('#chat').prop('disabled', false);
-                        $('.chat-content').scrollTop($('.chat-content').height());
-                        $('#chat').focus();
+                        chatBox.prop('disabled', false);
+                        chatContent.scrollTop($('.chat-content').height());
+                        chatBox.focus();
                     },
                     error: function (err) {
                         console.log(err);
@@ -40,9 +46,9 @@ $(document).ready( function () {
                 });
 
                 // Bot is typing (wait response from the server)
-                $('.chat-content').append('<p class="bot-chat waiting">' + 'bot is typing...' + '</p>');
-                $('#chat').prop('disabled', true);
-                $('.chat-content').scrollTop($('.chat-content').height());
+                chatContent.append('<p class="bot-chat waiting">' + 'bot is typing...' + '</p>');
+                chatBox.prop('disabled', true);
+                chatContent.scrollTop($('.chat-content').height());
 
             }
         }
