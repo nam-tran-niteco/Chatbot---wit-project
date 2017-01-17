@@ -6,13 +6,35 @@ let instance = null;
 class ChatController {
 
     /**
+     * Class Constructor function
+     * @returns an instance of Class ChatController (Singleton) 
+     */
+    constructor () {
+        // load properties
+        this.properties();
+
+        var Wit = require('node-wit').Wit;
+        
+        var config = {
+            accessToken: this.accessToken,
+            actions: this.actions
+        };
+        this.wit = new Wit(config);
+
+        if ( !instance )
+            instance = this;
+        
+        return instance;
+    }
+
+    /**
      * Get the first entity in Entities Array sent from Wit server after extract the request
      * @param entities
      * @param entity
      * @returns {value}
      */
     firstEntityValue(entities, entity) {
-        const val = entities && entities[entity] &&
+        let val = entities && entities[entity] &&
                 Array.isArray(entities[entity]) &&
                 entities[entity].length > 0 &&
                 entities[entity][0].value
@@ -47,6 +69,13 @@ class ChatController {
         this.sessionId = uuid.v1();
 
         /**
+         * maximum steps allowed
+         */
+        this.max_steps = 5;
+
+        this.res = { context: null, response: null };
+
+        /**
          * All of implementation for all actions that declared in Wit.ai story dashboard
          * Used for Wit constructor
          * @Object
@@ -55,22 +84,25 @@ class ChatController {
         this.actions = {
             send(request, response) {
                 return new Promise(function(resolve, reject) {
-                    
+
                     if ( response ) {
-                        console.log(JSON.stringify(response));
-                        var responseToClient = _this.getResponseToClientObject();
-                        responseToClient.send(response);
+                        _this.res.response = response
+
+                        // var responseToClient = _this.getResponseToClientObject();
+                        // responseToClient.send(response);
+
                         return resolve();
                     }
                     else {
                         return reject();
                     }
-                    
+
                 });
             },
             getContact({context, entities}) {
                 var contactinfo = _this.firstEntityValue(entities, 'contactinfo');
                 context.contactinfo = contactinfo;
+                _this.res.context = context;
                 return context;
             }
         };
@@ -85,33 +117,41 @@ class ChatController {
     setResponseToClientObject(resp) {
         this.responseToClientObject = resp;
     }
-    
+
     getResponseToClientObject() {
         return this.responseToClientObject;
     }
 
     /**
-     * Class Constructor function
-     * @returns an instance of Class ChatController (Singleton) 
+     * Methods that handle request from client
+     * 1. Get Entities extracted by WIT 
+     * 2. Get simple response from wit stories declared by user
+     * 3. Implement all suitable actions declared in stories by user
+     * @param request Message from client
+     * @param success Callback function handle if method success
+     * @param err Callback function handle if have some error
      */
-    constructor () {
-        // load properties
-        this.properties();
-
-        var Wit = require('node-wit').Wit;
+    getMessageFromWit( request, success, err ) {
         
-        var config = {
-            accessToken: this.accessToken,
-            actions: this.actions
-        };
-        this.wit = new Wit(config);
-
-        if ( !instance )
-            instance = this;
+        this.wit.message( request, {} )
+            .then( success )
+            .catch( err );
+    }
+    
+    getConverseFromWit( request, success, err ) {
         
-        return instance;
+        this.wit.converse( this.sessionId, request, {} )
+            .then( success )
+            .catch( err );
     }
 
+    runActionsFromWit( request, success, err ) {
+
+        this.wit.runActions( this.sessionId, request, {}, this.max_steps)
+            .then( success )
+            .catch( err );
+    }
+    
 }
 
 module.exports = ChatController;

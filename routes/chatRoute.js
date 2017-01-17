@@ -28,7 +28,53 @@ router.post('/', function (req, res) {
             .catch((err) => {
                 return console.error(err);
             });
-        
+
+    }
+});
+
+router.post('/runactionsApi', function (req, res) {
+    if ( req.body.chat ) {
+
+        chatController.setResponseToClientObject(res);
+
+        chatController.runActionsFromWit( req.body.chat,
+            (data) => {
+                console.log( JSON.stringify( data ) );
+                res.send( chatController.res );
+            },
+            () => {
+                res.send( {message: 'Error'} );
+            }
+        );
+    }
+});
+
+router.post('/messageApi', function (req, res) {
+    if ( req.body.chat ) {
+
+        chatController.getMessageFromWit( req.body.chat,
+            (data) => {
+                res.send( data );
+            },
+            () => {
+                res.send( {message: 'Error'} );
+            }
+        );
+    }
+});
+
+router.post('/converseApi', function (req, res) {
+    if ( req.body.chat ) {
+
+        chatController.getConverseFromWit( req.body.chat,
+            (data) => {
+                res.send( data );
+            },
+            () => {
+                res.send( {message: 'Error'} );
+            }
+        );
+
     }
 });
 
