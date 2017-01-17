@@ -32,8 +32,15 @@ $(document).ready( function () {
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         
-                        // got the response, replace text and focus the input box
-                        $('.waiting').text(data.text);
+                        var isGetResponseSuccess = data.status;
+                        
+                        if( isGetResponseSuccess ) {
+                            // got the response, replace text and focus the input box
+                            $('.waiting').text(data.response.text);
+                        }
+                        else {
+                            $('.waiting').text('Something went wrong with server');
+                        }
                         $('.waiting').removeClass('waiting');
 
                         chatBox.prop('disabled', false);

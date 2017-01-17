@@ -18,16 +18,18 @@ router.get('/', function(req, res, next) {
 // request sent from Chatbox form
 router.post('/', function (req, res) {
     if ( req.body.chat ) {
-        
-        chatController.setResponseToClientObject(res);
-        
-        chatController.wit.runActions(chatController.sessionId, req.body.chat, {}, 5)
-            .then((ctx) => {
-                console.log('Run actions: ' + JSON.stringify(ctx));
-            })
-            .catch((err) => {
-                return console.error(err);
-            });
+
+        chatController.runActionsFromWit( req.body.chat,
+            (data) => {
+                console.log( JSON.stringify( data ) );
+                chatController.responseApi.status = 1;
+                res.send( chatController.responseApi );
+            },
+            () => {
+                chatController.responseApi.status = 0;
+                res.send( chatController.responseApi  );
+            }
+        );
 
     }
 });
@@ -35,15 +37,15 @@ router.post('/', function (req, res) {
 router.post('/runactionsApi', function (req, res) {
     if ( req.body.chat ) {
 
-        chatController.setResponseToClientObject(res);
-
         chatController.runActionsFromWit( req.body.chat,
             (data) => {
                 console.log( JSON.stringify( data ) );
-                res.send( chatController.res );
+                chatController.responseApi.status = 1;
+                res.send( chatController.responseApi );
             },
             () => {
-                res.send( {message: 'Error'} );
+                chatController.responseApi.status = 0;
+                res.send( chatController.responseApi  );
             }
         );
     }
@@ -57,7 +59,8 @@ router.post('/messageApi', function (req, res) {
                 res.send( data );
             },
             () => {
-                res.send( {message: 'Error'} );
+                chatController.responseApi.status = 0;
+                res.send( chatController.responseApi  );
             }
         );
     }
@@ -71,7 +74,8 @@ router.post('/converseApi', function (req, res) {
                 res.send( data );
             },
             () => {
-                res.send( {message: 'Error'} );
+                chatController.responseApi.status = 0;
+                res.send( chatController.responseApi  );
             }
         );
 

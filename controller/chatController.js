@@ -73,7 +73,12 @@ class ChatController {
          */
         this.max_steps = 5;
 
-        this.res = { context: null, response: null };
+        /**
+         * 
+         * @type {{context: {}, response: {}}}
+         * @type status 0: Error, 1: Success
+         */
+        this.responseApi = { context: {}, response: {}, status: 0 };
 
         /**
          * All of implementation for all actions that declared in Wit.ai story dashboard
@@ -86,10 +91,8 @@ class ChatController {
                 return new Promise(function(resolve, reject) {
 
                     if ( response ) {
-                        _this.res.response = response
-
-                        // var responseToClient = _this.getResponseToClientObject();
-                        // responseToClient.send(response);
+                        
+                        _this.responseApi.response = response;
 
                         return resolve();
                     }
@@ -102,24 +105,12 @@ class ChatController {
             getContact({context, entities}) {
                 var contactinfo = _this.firstEntityValue(entities, 'contactinfo');
                 context.contactinfo = contactinfo;
-                _this.res.context = context;
+                
+                _this.responseApi.context = context;
+                
                 return context;
             }
         };
-    }
-
-    /**
-     * Getter and Setter for Client Response
-     * Client response just given by a router, in send function need a function that send a response to customer
-     * ==> So we have to have an instance of this response object to send
-     * @param resp
-     */
-    setResponseToClientObject(resp) {
-        this.responseToClientObject = resp;
-    }
-
-    getResponseToClientObject() {
-        return this.responseToClientObject;
     }
 
     /**
