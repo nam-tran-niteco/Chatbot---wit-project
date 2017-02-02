@@ -1,0 +1,33 @@
+/**
+ *  Reset all stylesheet
+ *  Author: Tran Hoai Nam
+*/
+body {
+    padding-top: 20px;
+    font-size: 14px;
+    font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+h1 {
+    color: red;
+}
+
+.message {
+    font-size: 20px;
+
+    &.success {
+        color: limegreen;
+    }
+
+    &.error {
+        color: red;
+    }
+}
+
+table {
+    border: 1px solid #d9d9d9;
+}

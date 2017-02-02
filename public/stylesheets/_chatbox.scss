@@ -1,0 +1,50 @@
+// CHAT BOX
+.chatbot-title {
+    text-align: center;
+}
+.chatbox {
+    margin: 0 auto;
+    max-width: 902px;
+    height: calc(100vh - 225px);
+    width: 95%;
+
+    .chat-content {
+        height: 100%;
+        overflow: auto;
+
+        p {
+            border-radius: 5px;
+            clear: both;
+            margin: 1px 0;
+            padding: 20px;
+            max-width: 60%;
+        }
+
+        .bot-chat {
+            background: #d9d9d9;
+            color: #000;
+            float: left;
+        }
+
+        .user-chat {
+            background: #4080ff;
+            color: #ffffff;
+            float: right;
+        }
+
+    }
+
+    .chat-input {
+        margin: 20px 0;
+        text-align: center;
+
+        #chat {
+            border: 1px solid blue;
+            padding: 15px;
+            width: 90%;
+        }
+
+    }
+
+
+}

@@ -23,14 +23,17 @@ router.post('/', function (req, res) {
             (data) => {
                 console.log( JSON.stringify( data ) );
                 chatController.responseApi.status = 1;
-                res.send( chatController.responseApi );
+                res.json( chatController.responseApi );
             },
             () => {
                 chatController.responseApi.status = 0;
-                res.send( chatController.responseApi  );
+                res.json( chatController.responseApi  );
             }
         );
 
+    }
+    else {
+        res.json( {message: 'Need parameters: chat'} );
     }
 });
 
@@ -41,14 +44,15 @@ router.post('/runactionsApi', function (req, res) {
             (data) => {
                 console.log( JSON.stringify( data ) );
                 chatController.responseApi.status = 1;
-                res.send( chatController.responseApi );
+                res.json( chatController.responseApi );
             },
             () => {
                 chatController.responseApi.status = 0;
-                res.send( chatController.responseApi  );
+                res.json( chatController.responseApi  );
             }
         );
     }
+    else res.json( {message: 'haha'} );
 });
 
 router.post('/messageApi', function (req, res) {
@@ -56,30 +60,33 @@ router.post('/messageApi', function (req, res) {
 
         chatController.getMessageFromWit( req.body.chat,
             (data) => {
-                res.send( data );
+                res.json( data );
             },
             () => {
                 chatController.responseApi.status = 0;
-                res.send( chatController.responseApi  );
+                res.json( chatController.responseApi  );
             }
         );
     }
+    else res.json( {message: 'haha'} );
 });
 
 router.post('/converseApi', function (req, res) {
+    console.log(req.body);
     if ( req.body.chat ) {
 
         chatController.getConverseFromWit( req.body.chat,
             (data) => {
-                res.send( data );
+                res.json( data );
             },
             () => {
                 chatController.responseApi.status = 0;
-                res.send( chatController.responseApi  );
+                res.json( chatController.responseApi );
             }
         );
 
     }
+    else res.json( {message: 'haha'} );
 });
 
 module.exports = router;

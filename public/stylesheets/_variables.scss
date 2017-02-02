@@ -1,0 +1,56 @@
+//Default fonts - use directly from Google Fonts
+$serif			:		"Lusitana", serif !default;
+// $serif			:		'PT Serif', serif;
+$sans			:		"Open Sans", sans-serif !default;
+
+//Color branding, light mode
+$black			:		#1d1c20 !default;
+$red			:		#d62802 !default;
+$dark_gray1		:		#888888 !default;
+$dark_gray2		:		#777777 !default;
+$light_gray		:		#d5dadf !default;
+$light_yellow	:		#fff8e5 !default;
+$dark_yellow	:		#ffe399 !default;
+$white			:		#ffffff !default;
+$green          :       #e1f9b7 !default;
+$dark_green     :       #649d01 !default;
+$light_red      :       #ffcdc2 !default;
+
+//Color branding, dark mode
+$dark-background: #1d1c20;
+$dark-darken-background: #19191c;
+$dark-foreground: #fff;
+$dark-text: #efefef;
+$dark-dimmed-text: #777;
+$dark-description-text: #777;
+$dark-article-lead-text: #ddd;
+$dark-article-body-text: #c0c0c0;
+$dark-highlight: #db4c40;
+$dark-separator: #555555;
+
+//Responsiveness breakpoints
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$hd-desktop-width:1200px;
+
+@mixin mobile {
+    @media (max-width: #{$tablet-width - 1px}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+        @content;
+    }
+}
+@mixin desktop {
+    @media (min-width: #{$desktop-width}) and (max-width: #{$hd-desktop-width - 1px}) {
+        @content;
+    }
+}
+@mixin desktop-hd {
+    @media (min-width: #{$hd-desktop-width}) {
+        @content;
+    }
+}
