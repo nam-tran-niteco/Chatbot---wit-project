@@ -107,7 +107,20 @@ class ChatController {
                 context.contactinfo = contactinfo;
                 
                 _this.responseApi.context = context;
+                _this.responseApi.entities = entities;
                 
+                return context;
+            },
+            getRequest({context, entities}) {
+                var request_action = _this.firstEntityValue(entities, 'request_action');
+                var request_object = _this.firstEntityValue(entities, 'request_object');
+
+                context.request_action = request_action;
+                context.request_object = request_object;
+
+                _this.responseApi.context = context;
+                _this.responseApi.entities = entities;
+
                 return context;
             }
         };

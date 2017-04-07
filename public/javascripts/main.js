@@ -33,13 +33,27 @@ $(document).ready( function () {
                     success: function (data) {
                         
                         var isGetResponseSuccess = data.status;
+
+                        console.log(data);
                         
-                        if( isGetResponseSuccess ) {
+                        if ( isGetResponseSuccess ) {
                             // got the response, replace text and focus the input box
-                            $('.waiting').text(data.response.text);
+                            if (data.entities) {
+                                var entities = data.entities;
+                                if (entities.intent) {
+                                    var intent = entities.intent[0].value;
+                                    if (intent == 'request') {
+                                        var message = 'Có phải bạn muốn ' + entities.request_action[0].value
+                                                    + entities.request_object[0].value + '? ';
+                                        message += 'Hãy cho tôi thêm nhiều yêu cầu nữa';
+                                        $('.waiting').text(message);
+                                    }
+                                }
+                            }
+                            else $('.waiting').text('Tôi chưa hiểu bạn muốn nói gì. Hãy thử câu lệnh khác');
                         }
                         else {
-                            $('.waiting').text('Something went wrong with server');
+                            $('.waiting').text('Đã có vấn đề xảy ra với server. Thử lại trong ít phút');
                         }
                         $('.waiting').removeClass('waiting');
 
@@ -53,7 +67,7 @@ $(document).ready( function () {
                 });
 
                 // Bot is typing (wait response from the server)
-                chatContent.append('<p class="bot-chat waiting">' + 'bot is typing...' + '</p>');
+                chatContent.append('<p class="bot-chat waiting">' + 'Bot đang nhập ...' + '</p>');
                 chatBox.prop('disabled', true);
                 chatContent.scrollTop($('.chat-content').height());
 

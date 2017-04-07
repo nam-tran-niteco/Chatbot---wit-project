@@ -19,10 +19,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function (req, res) {
     if ( req.body.chat ) {
 
-        chatController.runActionsFromWit( req.body.chat,
+        chatController.getMessageFromWit( req.body.chat,
             (data) => {
-                console.log( JSON.stringify( data ) );
                 chatController.responseApi.status = 1;
+                chatController.responseApi.entities = data.entities;
                 res.json( chatController.responseApi );
             },
             () => {
@@ -30,10 +30,9 @@ router.post('/', function (req, res) {
                 res.json( chatController.responseApi  );
             }
         );
-
     }
     else {
-        res.json( {message: 'Need parameters: chat'} );
+        res.json( {message: 'Hãy nói gì đó mà tôi có thể hiểu được'} );
     }
 });
 
@@ -52,7 +51,7 @@ router.post('/runactionsApi', function (req, res) {
             }
         );
     }
-    else res.json( {message: 'haha'} );
+    else res.json( {message: 'Hãy nói gì đó mà tôi có thể hiểu được. Xin cảm ơn'} );
 });
 
 router.post('/messageApi', function (req, res) {
@@ -68,7 +67,7 @@ router.post('/messageApi', function (req, res) {
             }
         );
     }
-    else res.json( {message: 'haha'} );
+    else res.json( {message: 'Hãy nói gì đó mà tôi có thể hiểu được. Xin cảm ơn'} );
 });
 
 router.post('/converseApi', function (req, res) {
@@ -86,7 +85,7 @@ router.post('/converseApi', function (req, res) {
         );
 
     }
-    else res.json( {message: 'haha'} );
+    else res.json( {message: 'Hãy nói gì đó mà tôi có thể hiểu được. Xin cảm ơn'} );
 });
 
 module.exports = router;
