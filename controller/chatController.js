@@ -122,6 +122,9 @@ class ChatController {
                 _this.responseApi.entities = entities;
 
                 return context;
+            },
+            agreedHandle({context, entities}) {
+                return context;
             }
         };
     }
