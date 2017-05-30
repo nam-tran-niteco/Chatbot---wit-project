@@ -10,6 +10,8 @@ var ChatController = require('../controller/chatController');
 
 var viewpath = 'manage/chat';
 var chatController = new ChatController();
+var Tokenizer = require('node-vntokenizer');
+var token = new Tokenizer();
 
 router.get('/', function(req, res, next) {
     res.render(viewpath)
@@ -19,10 +21,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function (req, res) {
     if ( req.body.chat ) {
 
-        chatController.getMessageFromWit( req.body.chat,
+        chatController.runActionsFromWit( req.body.chat,
             (data) => {
+                console.log( JSON.stringify( data ) );
                 chatController.responseApi.status = 1;
-                chatController.responseApi.entities = data.entities;
                 res.json( chatController.responseApi );
             },
             () => {
@@ -38,6 +40,10 @@ router.post('/', function (req, res) {
 
 router.post('/runactionsApi', function (req, res) {
     if ( req.body.chat ) {
+
+        // var Tokenizer = require('node-vntokenizer');
+        // var token = new Tokenizer();
+        // console.log(token.tokenize(req.body.chat));
 
         chatController.runActionsFromWit( req.body.chat,
             (data) => {

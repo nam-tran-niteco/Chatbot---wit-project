@@ -38,17 +38,19 @@ $(document).ready( function () {
                         
                         if ( isGetResponseSuccess ) {
                             // got the response, replace text and focus the input box
-                            if (data.entities) {
-                                var entities = data.entities;
-                                if (entities.intent) {
-                                    var intent = entities.intent[0].value;
-                                    if (intent == 'request') {
-                                        var message = 'Có phải bạn muốn ' + entities.request_action[0].value
-                                                    + entities.request_object[0].value + '? ';
-                                        message += 'Hãy cho tôi thêm nhiều yêu cầu nữa';
-                                        $('.waiting').text(message);
-                                    }
-                                }
+                            if (data.response) {
+                                // var entities = data.entities;
+                                // if (entities.intent) {
+                                //     var intent = entities.intent[0].value;
+                                //     if (intent == 'request') {
+                                //         var message = 'Có phải bạn muốn ' + entities.request_action[0].value
+                                //                     + entities.request_object[0].value + '? ';
+                                //         message += 'Hãy cho tôi thêm nhiều yêu cầu nữa';
+                                //         $('.waiting').text(message);
+                                //     }
+                                // }
+                                var message = data.response.text;
+                                $('.waiting').text(message);
                             }
                             else $('.waiting').text('Tôi chưa hiểu bạn muốn nói gì. Hãy thử câu lệnh khác');
                         }

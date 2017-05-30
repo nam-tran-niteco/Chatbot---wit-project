@@ -61,7 +61,7 @@ class ChatController {
         /**
          * wit.ai app's access token (should be a parameter in the future)
          */
-        this.accessToken = "PGV3JRAW26TKFWSGMCRJIQDXQWDB34SA";
+        this.accessToken = "EBUYEBU6O42HW2J2GDTRFJPOU2YRKDI3";
 
         /**
          * session id for each request sent to the Wit server (used for counting maximum accepted request)
@@ -103,8 +103,10 @@ class ChatController {
                 });
             },
             getContact({context, entities}) {
-                var contactinfo = _this.firstEntityValue(entities, 'contactinfo');
-                context.contactinfo = contactinfo;
+                var intent = _this.firstEntityValue(entities, 'intent');                
+                var username = _this.firstEntityValue(entities, 'username');
+
+                if (intent == "info") context.username = username;
                 
                 _this.responseApi.context = context;
                 _this.responseApi.entities = entities;
@@ -112,15 +114,17 @@ class ChatController {
                 return context;
             },
             getRequest({context, entities}) {
-                var request_action = _this.firstEntityValue(entities, 'request_action');
-                var request_object = _this.firstEntityValue(entities, 'request_object');
-
-                context.request_action = request_action;
-                context.request_object = request_object;
 
                 _this.responseApi.context = context;
                 _this.responseApi.entities = entities;
 
+                return context;
+            },
+            askBotName({context, entities}) {
+                
+                _this.responseApi.context = context;
+                _this.responseApi.entities = entities;
+                
                 return context;
             },
             agreedHandle({context, entities}) {
